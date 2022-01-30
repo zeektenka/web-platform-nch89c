@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+  background: black;
+  font-family: 'Press Start 2P', 'Courier New', Courier, monospace;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#canvas{
+  width: 100vw;
+  height: 100vh;
+  user-select: none;
+}
+
+.score_board {
+  position: absolute;
+  width: 100%;
+  align-content: space-between;
+  justify-content: space-between;
+  left: 0;
+  top: 0;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding-left: 10px;
+ 
+} 
+
+#startScreen {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 1);
+  display: grid;
+  place-content: center;
+}
+
+
+
+#start_btn{
+  font-family: 'Press Start 2P', 'Courier New', Courier, monospace;
+  background-color: blue;
+  padding: 10px;
+  color: white;
+  font-size: 2rem;
+}
+
+#play_again_btn{
+  font-family: 'Press Start 2P', 'Courier New', Courier, monospace;
+  background-color: blue;
+  padding: 10px;
+  color: white;
+  font-size: 2rem;
+}
+
+#game_over{
+  display: none;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 1);
+  place-content: center;
+}
+
