@@ -101,7 +101,10 @@ function Game() {
   let enemyArr = [];
   let debris = [];
 
-  for (let i = 0; i < 200; i++) {
+  function SpawnEnemies(){
+    
+  }
+  for (let i = 0; i < 10; i++) {
     const radius = (Math.random() + 3) * 10;
     const color = `rgb(${Math.random() * 255},${Math.random() * 255},${
       Math.random() * 255
@@ -121,8 +124,8 @@ function Game() {
     let newY = targetY - y;
     let distance = Math.sqrt(newX * newX + newY * newY);
 
-    let vx = newX / distance;
-    let vy = newY / distance;
+    let vx = newX / distance * 2
+    let vy = newY / distance * 2
 
     enemyArr.push(new Objects(x, y, radius, color, vx, vy));
   }
@@ -191,6 +194,31 @@ function Game() {
         if (dist - enemy.radius < 1) {
           score_count += 5;
           Score.innerText = score_count;
+          for (let i = 0; i < 2; i++) {
+            const radius = (Math.random() + 3) * 10;
+            const color = `rgb(${Math.random() * 255},${Math.random() * 255},${
+              Math.random() * 255
+            })`;
+            let xMax = canvas.width + 800;
+            let xMin = -800;
+            let yMax = canvas.height + 800;
+            let yMin = -800;
+        
+            let x = Math.floor(Math.random() * (xMax - xMin) + xMin) * 2;
+            let y = Math.floor(Math.random() * (yMax - yMin) + yMin) * 2;
+        
+            targetX = canvas.width / 2 - Playerradius;
+            targetY = canvas.height / 2 - Playerradius;
+        
+            let newX = targetX - x;
+            let newY = targetY - y;
+            let distance = Math.sqrt(newX * newX + newY * newY);
+        
+            let vx = newX / distance;
+            let vy = newY / distance;
+        
+            enemyArr.push(new Objects(x, y, radius, color, vx, vy));
+          }
           if (score_count > high_score) {
             high_score = score_count;
             localStorage.setItem('HighScore', JSON.stringify(high_score));
