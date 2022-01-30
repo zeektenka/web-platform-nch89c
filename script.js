@@ -40,8 +40,10 @@ function Game() {
 
   function drawPlayer() {
     c.beginPath();
-    c.strokeStyle = 'red';
+    c.strokeStyle = 'cyan';
+    c.fillStyle = 'white'
     c.arc(x, y, Playerradius, 0, 2 * Math.PI);
+    c.fill()
     c.stroke();
   }
 
