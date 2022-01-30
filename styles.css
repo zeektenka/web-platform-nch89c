@@ -16,7 +16,8 @@ body {
 
 .score_board {
   position: absolute;
-  width: 50%;
+  width: 80%;
+  display: flex;
   align-content: space-between;
   justify-content: space-between;
   left: 0;
