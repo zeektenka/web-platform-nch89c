@@ -35,22 +35,22 @@ function Game() {
   let Playerradius = 20;
   //(canvas.getWidth()-gBall.getWidth())/2
   //(canvas.getHeight()-gBall.getHeight())/2
-  let x = (canvas.width - Playerradius) / 2;
-  let y = (canvas.height - Playerradius) / 2;
+  let x = (canvas.width + Playerradius) / 2;
+  let y = (canvas.height + Playerradius) / 2;
 
   function drawPlayer() {
     c.beginPath();
     c.strokeStyle = 'cyan';
-    c.fillStyle = 'white'
+    c.fillStyle = 'white';
     c.arc(x, y, Playerradius, 0, 2 * Math.PI);
-    c.fill()
+    c.fill();
     c.stroke();
   }
 
   ////////////////////////////////
   function Bullets(radius, vx, vy) {
-    this.x = canvas.width / 2 - Playerradius;
-    this.y = canvas.height / 2 - Playerradius;
+    this.x = (canvas.width + Playerradius) / 2;
+    this.y = (canvas.height + Playerradius) / 2;
     this.radius = radius;
     this.vx = vx;
     this.vy = vy;
