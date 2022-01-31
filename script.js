@@ -131,6 +131,7 @@ function Game() {
     let newX = targetX - x;
     let newY = targetY - y;
     let distance = Math.sqrt(newX * newX + newY * newY);
+    
 
     let vx = (newX / distance) * 2;
     let vy = (newY / distance) * 2;
@@ -146,7 +147,8 @@ function Game() {
 
     let newX = clickedX - bulletX;
     let newY = clickedY - bulletY;
-    let distance = Math.sqrt(newX * newX + newY * newY);
+    
+    let distance = Math.hypot(clickedX - bulletX, clickedY - bulletY);
 
     let vx = newX / distance;
     let vy = newY / distance;
@@ -233,7 +235,7 @@ function Game() {
             enemyArr.push(new Objects(x, y, radius, color, vx, vy));
           }
 
-          for (let i = 0; i < 200; i++) {
+          for (let i = 0; i < 100; i++) {
             debris.push(
               new Objects(
                 enemy.x,
@@ -245,7 +247,7 @@ function Game() {
               )
             );
           }
-          enemy.radius = enemy.radius - 10;
+          enemy.radius = enemy.radius - 15;
           setTimeout(() => {
             enemy.radius < 20 && enemyArr.splice(EnemyIndex, 1);
             bulletsArray.splice(bulletIndex, 1);
