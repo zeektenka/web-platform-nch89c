@@ -32,7 +32,15 @@ let high_score =
 HighScore.innerText = high_score;
 HighScore2.innerText = high_score;
 
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+}
+
 function Game() {
+  let PlayerColor = `hsla(${19}, 100%, 50%, 1)`;
+
   const canvas = document.querySelector('canvas'); // Grab canvas from DOM
   const c = canvas.getContext('2d'); // Get context to access 2D canvas functions
   canvas.width = window.innerWidth; // Set canvas' width to full width of window
@@ -46,8 +54,8 @@ function Game() {
 
   function drawPlayer() {
     c.beginPath();
-    c.strokeStyle = 'orange';
-    c.fillStyle = 'orange';
+    c.strokeStyle = PlayerColor;
+    c.fillStyle = PlayerColor;
     c.arc(x, y, Playerradius, 0, 2 * Math.PI);
     c.fill();
     c.stroke();
@@ -64,7 +72,7 @@ function Game() {
 
   Bullets.prototype.draw = function () {
     c.beginPath();
-    c.fillStyle = 'orange';
+    c.fillStyle = PlayerColor;
     c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
     c.fillStyle = this.color;
     c.fill();
@@ -113,17 +121,15 @@ function Game() {
 
   function SpawnEnemies() {}
   for (let i = 0; i < 10; i++) {
-    let radius = (Math.random() + 3) * 10;
     const color = `rgb(${(Math.random() + 5) * 255},${Math.random() * 255},${
       Math.random() * 255
     })`;
-    let xMax = canvas.width + 200;
-    let xMin = -100;
-    let yMax = canvas.height + 200;
-    let yMin = -100;
 
-    let x = Math.floor(Math.random() * (xMax - xMin) + xMin) * 2;
-    let y = Math.floor(Math.random() * (yMax - yMin) + yMin) * 2;
+    let xList = [getRandomInt(0, -1000), getRandomInt(canvas.width, 1000)];
+    let yList = [getRandomInt(0, -1000), getRandomInt(canvas.height, 1000)];
+
+    let x = xList[Math.floor(Math.random() * 2)];
+    let y = yList[Math.floor(Math.random() * 2)];
 
     targetX = canvas.width / 2 - Playerradius;
     targetY = canvas.height / 2 - Playerradius;
@@ -134,6 +140,9 @@ function Game() {
 
     let vx = (newX / distance) * 2;
     let vy = (newY / distance) * 2;
+
+    let radiusChoice = [25, 25, 35, 25, 45, 55, 25, 37, 25, 40];
+    let radius = radiusChoice[Math.floor(Math.random() * 10)];
 
     enemyArr.push(new Objects(x, y, radius, color, vx, vy));
   }
@@ -204,34 +213,19 @@ function Game() {
         if (dist - enemy.radius < 1) {
           score_count += 5;
           Score.innerText = score_count;
+          if (score_count % 100 == 0) {
+            PlayerColor = `hsla(${getRandomInt(1, 360)}, 100%, 50%, 1)`;
+          }
+
+          enemy.radius = enemy.radius - 16;
+          bulletsArray.splice(bulletIndex, 1);
+          if (enemy.radius < 25) {
+            enemyArr.splice(EnemyIndex, 1);
+          }
+
           if (score_count > high_score) {
             high_score = score_count;
             localStorage.setItem('HighScore', JSON.stringify(high_score));
-          }
-          for (let i = 0; i < 2; i++) {
-            let radius = (Math.random() + 3) * 10;
-            const color = `rgb(${Math.random() * 255},${Math.random() * 255},${
-              (Math.random() + 5) * 255
-            })`;
-            let xMax = canvas.width + 800;
-            let xMin = -800;
-            let yMax = canvas.height + 800;
-            let yMin = -800;
-
-            let x = Math.floor(Math.random() * (xMax - xMin) + xMin) * 2;
-            let y = Math.floor(Math.random() * (yMax - yMin) + yMin) * 2;
-
-            targetX = canvas.width / 2 - Playerradius;
-            targetY = canvas.height / 2 - Playerradius;
-
-            let newX = targetX - x;
-            let newY = targetY - y;
-            let distance = Math.sqrt(newX * newX + newY * newY);
-
-            let vx = newX / distance;
-            let vy = newY / distance;
-
-            enemyArr.push(new Objects(x, y, radius, color, vx, vy));
           }
 
           for (let i = 0; i < 80; i++) {
@@ -246,11 +240,44 @@ function Game() {
               )
             );
           }
-          enemy.radius = enemy.radius - 15;
+          let escalateSpawn = 1;
+          escalateSpawn += 0.05;
+          let val = Math.floor(escalateSpawn);
+
           setTimeout(() => {
-            enemy.radius < 20 && enemyArr.splice(EnemyIndex, 1);
-            bulletsArray.splice(bulletIndex, 1);
-          }, 0);
+            for (let i = 0; i < val; i++) {
+              const color = `rgb(${Math.random() * 255},${
+                Math.random() * 255
+              },${(Math.random() + 5) * 255})`;
+
+              let xList = [
+                getRandomInt(0, -1000),
+                getRandomInt(canvas.width, 1000),
+              ];
+              let yList = [
+                getRandomInt(0, -1000),
+                getRandomInt(canvas.height, 1000),
+              ];
+
+              let x = xList[Math.floor(Math.random() * 2)];
+              let y = yList[Math.floor(Math.random() * 2)];
+
+              targetX = canvas.width / 2 - Playerradius;
+              targetY = canvas.height / 2 - Playerradius;
+
+              let newX = targetX - x;
+              let newY = targetY - y;
+              let distance = Math.sqrt(newX * newX + newY * newY);
+
+              let vx = newX / distance;
+              let vy = newY / distance;
+
+              let radiusChoice = [25, 25, 35, 25, 45, 35, 25, 27, 25, 40];
+              let radius = radiusChoice[Math.floor(Math.random() * 10)];
+
+              enemyArr.push(new Objects(x, y, radius, color, vx, vy));
+            }
+          }, 1);
         }
       });
     });
