@@ -209,15 +209,15 @@ function Game() {
             high_score = score_count;
             localStorage.setItem('HighScore', JSON.stringify(high_score));
           }
-          for (let i = 0; i < 2; i++) {
+          for (let i = 0; i < 20; i++) {
             let radius = (Math.random() + 3) * 10;
             const color = `rgb(${Math.random() * 255},${Math.random() * 255},${
               (Math.random() + 5) * 255
             })`;
-            let xMax = canvas.width + 800;
-            let xMin = -800;
-            let yMax = canvas.height + 800;
-            let yMin = -800;
+            let xMax = canvas.width + 100;
+            let xMin = -100;
+            let yMax = canvas.height + 100;
+            let yMin = -100;
 
             let x = Math.floor(Math.random() * (xMax - xMin) + xMin) * 2;
             let y = Math.floor(Math.random() * (yMax - yMin) + yMin) * 2;
