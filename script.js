@@ -210,7 +210,7 @@ function Game() {
           for (let i = 0; i < 2; i++) {
             let radius = (Math.random() + 3) * 10;
             const color = `rgb(${Math.random() * 255},${Math.random() * 255},${
-              (Math.random()+5) * 255
+              (Math.random() + 5) * 255
             })`;
             let xMax = canvas.width + 800;
             let xMin = -800;
