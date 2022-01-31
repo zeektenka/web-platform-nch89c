@@ -64,7 +64,7 @@ function Game() {
 
   Bullets.prototype.draw = function () {
     c.beginPath();
-    c.fillStyle = 'white';
+    c.fillStyle = 'orange';
     c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
     c.fillStyle = this.color;
     c.fill();
@@ -246,6 +246,7 @@ function Game() {
                 (Math.random() - 0.5) * 100
               )
             );
+            
           }
           enemy.radius = enemy.radius - 15;
           setTimeout(() => {
