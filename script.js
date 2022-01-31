@@ -112,7 +112,7 @@ function Game() {
   let debris = [];
 
   function SpawnEnemies() {}
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 20; i++) {
     let radius = (Math.random() + 3) * 10;
     const color = `rgb(${(Math.random() + 5) * 255},${Math.random() * 255},${
       Math.random() * 255
@@ -131,12 +131,14 @@ function Game() {
     let newX = targetX - x;
     let newY = targetY - y;
     let distance = Math.sqrt(newX * newX + newY * newY);
-    
 
     let vx = (newX / distance) * 2;
     let vy = (newY / distance) * 2;
-
-    enemyArr.push(new Objects(x, y, radius, color, vx, vy));
+    if (distance > 800) {
+      enemyArr.push(new Objects(x, y, radius, color, vx * 2, vy * 2));
+    } else {
+      enemyArr.push(new Objects(x, y, radius, color, vx, vy));
+    }
   }
 
   function BulletLogic(e) {
@@ -147,7 +149,7 @@ function Game() {
 
     let newX = clickedX - bulletX;
     let newY = clickedY - bulletY;
-    
+
     let distance = Math.hypot(clickedX - bulletX, clickedY - bulletY);
 
     let vx = newX / distance;
@@ -228,19 +230,22 @@ function Game() {
             let newX = targetX - x;
             let newY = targetY - y;
             let distance = Math.sqrt(newX * newX + newY * newY);
-
             let vx = newX / distance;
             let vy = newY / distance;
 
-            enemyArr.push(new Objects(x, y, radius, color, vx, vy));
+            if (distance > 600) {
+              enemyArr.push(new Objects(x, y, radius, color, vx * 2, vy * 2));
+            } else {
+              enemyArr.push(new Objects(x, y, radius, color, vx, vy));
+            }
           }
 
-          for (let i = 0; i < 100; i++) {
+          for (let i = 0; i < 10; i++) {
             debris.push(
               new Objects(
                 enemy.x,
                 enemy.y,
-                2,
+                4,
                 enemy.color,
                 (Math.random() - 0.5) * 100,
                 (Math.random() - 0.5) * 100
